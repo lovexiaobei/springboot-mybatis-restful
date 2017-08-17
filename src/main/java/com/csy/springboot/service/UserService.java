@@ -1,6 +1,7 @@
 package com.csy.springboot.service;
 
 import com.csy.springboot.domain.Mail;
+import com.csy.springboot.domain.Token;
 import com.csy.springboot.domain.User;
 import org.springframework.http.ResponseEntity;
 
@@ -17,4 +18,8 @@ public interface UserService {
     ResponseEntity sendCode(Mail mail);
 
     ResponseEntity register(User user);
+
+    boolean checkToken(Token token);
+
+    ResponseEntity getUser(int id);
 }

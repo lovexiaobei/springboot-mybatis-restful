@@ -1,8 +1,9 @@
 package com.csy.springboot.controller;
 
+import com.csy.springboot.annotation.Authorization;
 import com.csy.springboot.domain.Mail;
-import com.csy.springboot.service.UserService;
 import com.csy.springboot.domain.User;
+import com.csy.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,12 @@ public class UserRestController {
     @ResponseBody
     public ResponseEntity mailCode(@RequestBody Mail mail) {
         return userService.sendCode(mail);
+    }
+
+    @RequestMapping(value = "/api/{id}", method = RequestMethod.GET)
+    @Authorization
+    @ResponseBody
+    public ResponseEntity getUser(@PathVariable int id) {
+        return userService.getUser(id);
     }
 }

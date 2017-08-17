@@ -4,7 +4,6 @@ import com.csy.springboot.Md5.Md5Utils;
 import com.csy.springboot.dao.UserDao;
 import com.csy.springboot.domain.*;
 import com.csy.springboot.service.UserService;
-import org.spring.springboot.domain.*;
 import com.csy.springboot.utils.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -95,5 +94,22 @@ public class UserServiceImpl implements UserService {
             entry = ResponseEntity.ok(result);
         }
         return entry;
+    }
+
+    @Override
+    public boolean checkToken(Token token) {
+        return token.getToken().equals(userDao.findToken(token.getUser_id()).getToken());
+    }
+
+    @Override
+    public ResponseEntity getUser(int id) {
+        User user=userDao.findById((long) id);
+        if (user!=null){
+            return ResponseEntity.status(200).body(user);
+        }
+        ErrorResult errorResult = new ErrorResult();
+        errorResult.setError("未找到用户");
+        errorResult.setStatus(404);
+        return ResponseEntity.status(404).body(errorResult);
     }
 }
